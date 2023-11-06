@@ -109,17 +109,16 @@ jobs:
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Run docker-compose
         run: |
           cp CI/ESS/e2e/docker-compose.e2e.yaml docker-compose.yaml
           docker-compose pull
           docker-compose build --no-cache
           docker-compose up &
-      
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
         
-
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
