@@ -109,18 +109,24 @@ jobs:
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
 
-
-
       - name: Run docker-compose
         run: |
           cp CI/ESS/e2e/docker-compose.e2e.yaml docker-compose.yaml
           docker-compose pull
           docker-compose build --no-cache
           docker-compose up &
-          
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        
+
+      ## As long as it returns 404 we know that backend is up running.
+      ## Preferably include a health check endpoint for backend in the future.
+      - name: Wait for Backend
+        run: |
+          echo "Waiting for backend to be ready..."
+          until [ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:3000/health)" == "404" ]; do
+            printf '.'
+            sleep 5
+          done
+          echo "Backend is up and running!"
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:

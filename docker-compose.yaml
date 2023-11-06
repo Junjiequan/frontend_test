@@ -8,7 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   mongodb:
-    image: "bitnami/mongodb:latest"
+    image: "mongo:latest"
     ports:
       - "27017:27017"
     volumes:
@@ -37,8 +37,8 @@ services:
       mongodb:
         condition: service_healthy
   backend:
-    image: ghcr.io/scicatproject/backend-next:latest
-    command: sh -c "node dist/main"
+    image: localhost:5000/test_1:latest
+    command: sh -c " sleep 5 && node dist/main"
     ports:
       - 3000:3000
     volumes:
