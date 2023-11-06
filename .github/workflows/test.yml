@@ -116,12 +116,13 @@ jobs:
           docker-compose build --no-cache
           docker-compose up &
 
-      ## As long as it returns 404 we know that backend is up running.
+      ## This step ensures cypress only runs after backend is up.
+      ## As long as it returns 404 we know that backend is up.
       ## Preferably include a health check endpoint for backend in the future.
       - name: Wait for Backend
         run: |
           echo "Waiting for backend to be ready..."
-          until [ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:3000/health)" == "404" ]; do
+          until [ "$(curl -s -o /dev/null -w ''%{http_code}'' http://backend:3000/health)" == "404" ]; do
             printf '.'
             sleep 5
           done
