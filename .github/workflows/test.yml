@@ -121,12 +121,8 @@ jobs:
       ## Preferably include a health check endpoint for backend in the future.
       - name: Wait for Backend
         run: |
-          echo "Waiting for backend to be ready..."
-          until curl --output /dev/null --silent --head --fail http://localhost:3000/api/v3/datasets; do
-            printf '.'
-            sleep 5
-          done
-          echo "Backend is up and running!"
+          npm install -g wait-on && \
+          wait-on http-get://backend:3000/api/v3/datasets --timeout 300000
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
