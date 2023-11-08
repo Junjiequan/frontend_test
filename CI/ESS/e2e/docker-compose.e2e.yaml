@@ -40,14 +40,12 @@ services:
     image: ghcr.io/scicatproject/backend-next:latest
     command: sh -c "node dist/main"
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
       - "./CI/ESS/e2e/.env.backend-next:/home/node/app/.env"
     depends_on:
       mongodb:
         condition: service_healthy
-      scichat-loopback:
-        condition: service_started
       es01:
         condition: service_healthy
     labels:
@@ -74,8 +72,7 @@ services:
       - "./CI/ESS/site-logo.png:/usr/share/nginx/html/assets/images/site-logo.png"
       - "./CI/ESS/favicon.ico:/usr/share/nginx/html/favicon.ico"
     depends_on:
-      backend:
-        condition: service_started
+      - backend
     labels:
       - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
       - "traefik.http.routers.frontend.entrypoints=web"
@@ -87,6 +84,7 @@ services:
       - xpack.security.enabled=false
       - node.name=es01
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ES_PASSWORD=password
       - cluster.name=es-cluster
       - cluster.initial_master_nodes=es01
       - bootstrap.memory_lock=true
@@ -99,7 +97,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s http://es01:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
+          "curl -s -X GET http://es01:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
         ]
       interval: 30s
       timeout: 10s

@@ -116,23 +116,10 @@ jobs:
           docker-compose build --no-cache
           docker-compose up &
 
-      ## This step ensures cypress only runs after backend is up.
-      ## As long as it returns 404 we know that backend is up.
-      ## Preferably include a health check endpoint for backend in the future.
-
-      # - name: Wait for Backend
-      #   run: |
-      #     npm install -g wait-on && \
-      #     wait-on tcp:backend:3000 --timeout=300000
-
       - name: Wait for Backend
         run: |
-          echo "Waiting for backend to be ready..."
-          until curl --output /dev/null --silent --head --fail http://localhost:3000/api/v3/datasets; do
-            printf '.'
-            sleep 5
-          done
-          echo "Backend is up and running!"
+          npm install -g wait-on && \
+          wait-on http://localhost:3000/api/v3/health --timeout 200000
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
