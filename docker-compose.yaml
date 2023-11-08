@@ -8,7 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   mongodb:
-    image: "bitnami/mongodb:latest"
+    image: "mongo:latest"
     ports:
       - "27017:27017"
     volumes:
@@ -37,8 +37,8 @@ services:
       mongodb:
         condition: service_healthy
   backend:
-    image: ghcr.io/scicatproject/backend-next:latest
-    command: sh -c "node dist/main"
+    image: localhost:5000/test_1:latest
+    command: sh -c " sleep 5 && node dist/main"
     ports:
       - 3000:3000
     volumes:
@@ -46,6 +46,8 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
+      scichat-loopback:
+        condition: service_started
       es01:
         condition: service_healthy
     labels:
@@ -72,7 +74,8 @@ services:
       - "./CI/ESS/site-logo.png:/usr/share/nginx/html/assets/images/site-logo.png"
       - "./CI/ESS/favicon.ico:/usr/share/nginx/html/favicon.ico"
     depends_on:
-      - backend
+      backend:
+        condition: service_started
     labels:
       - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
       - "traefik.http.routers.frontend.entrypoints=web"
@@ -97,7 +100,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -X GET http://es01:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
+          "curl -s http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
         ]
       interval: 30s
       timeout: 10s
