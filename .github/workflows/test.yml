@@ -116,15 +116,12 @@ jobs:
           docker-compose build --no-cache
           docker-compose up -d
 
-      - name: Wait for Backend
+      - name: Wait for Backend and Copy File
         run: |
-          npm install -g wait-on && \
+          npm install -g wait-on
           wait-on http://localhost:3000/api/v3/health --timeout 200000
-
-      - name: Copy functionAccounts.json from backend container
-        run: |
           container_id=$(docker-compose ps -q backend)
-          docker cp "${container_id}:/functionAccounts.json.test" ./functionAccounts.json
+          docker cp "${container_id}:/functionalAccounts.json.test" ./functionalAccounts.json
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
