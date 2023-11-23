@@ -121,7 +121,7 @@ jobs:
           npm install -g wait-on
           wait-on http://localhost:3000/api/v3/health --timeout 200000
           container_id=$(docker-compose ps -q backend)
-          echo "Listing files in container ${container_id}"
+          echo "1Listing files in container ${container_id}"
           docker exec "${container_id}" ls -al /
           docker cp "${container_id}:/home/node/app/functionalAccounts.json.test" ./functionalAccounts.json
 
