@@ -123,7 +123,7 @@ jobs:
           container_id=$(docker-compose ps -q backend)
           echo "Listing files in container ${container_id}"
           docker exec "${container_id}" ls -al /
-          docker cp "${container_id}:/home/node/app/functionalAccounts.json.test" ./functionalAccounts.json
+          docker cp "${container_id}:/home/node/app/functionalAccounts.json.test" /home/node/app/functionalAccounts.json
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
