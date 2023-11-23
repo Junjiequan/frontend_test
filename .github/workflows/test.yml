@@ -121,6 +121,9 @@ jobs:
           npm install -g wait-on && \
           wait-on http://localhost:3000/api/v3/health --timeout 200000
 
+      - name: Create functionAccounts.json from backend container
+        run: docker cp backend_1:/functionAccounts.json.test ./functionAccounts.json
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
@@ -138,7 +141,6 @@ jobs:
         if: ${{ !cancelled() }}
         run: |
           docker-compose down -v
-
 
       - uses: actions/upload-artifact@v3
         if: ${{ failure() }}
