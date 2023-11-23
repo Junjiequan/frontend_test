@@ -109,7 +109,7 @@ Cypress.Commands.add("finishedLoading", (type) => {
 
 Cypress.Commands.add("isLoading", (type) => {
   cy.intercept(lbBaseUrl, (req) => {
-    req.on("response", (res) => res.delay(100)); // enough delay so that spinner appears
+    req.on("response", (res) => res.delay(100)); // enough delay so that spinner appears1
     cy.get('[data-cy="spinner"]');
   });
 
