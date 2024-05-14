@@ -12,10 +12,6 @@ describe("Datasets", () => {
   });
 
   after(() => {
-    cy.login(
-      Cypress.config("secondaryUsername"),
-      Cypress.config("secondaryPassword")
-    );
     cy.removeDatasets();
   });
 
@@ -76,12 +72,79 @@ describe("Datasets", () => {
           .first()
           .should("contain.text", "string");
         cy.get(
-          "[data-cy=metadata-edit-form] [data-cy=metadata-name-input]"
+          "[data-cy=metadata-edit-form] [data-cy=metadata-name-input]",
         ).should("have.value", metadataName);
         cy.get(
-          "[data-cy=metadata-edit-form] [data-cy=metadata-value-input]"
+          "[data-cy=metadata-edit-form] [data-cy=metadata-value-input]",
         ).should("have.value", metadataValue);
       });
+    });
+
+    it("should not be able to create a dataset with duplicate name", () => {
+      cy.createDataset("raw");
+
+      cy.visit("/datasets");
+
+      cy.get(".dataset-table mat-table mat-header-row").should("exist");
+
+      cy.finishedLoading();
+
+      cy.get('[data-cy="text-search"] input[type="search"]')
+        .clear()
+        .type("Cypress");
+
+      cy.isLoading();
+
+      cy.get("mat-row").contains("Cypress Dataset").first().click();
+
+      cy.wait("@fetch");
+
+      cy.finishedLoading();
+
+      cy.scrollTo("bottom");
+
+      cy.get('[role="tab"]').contains("Edit").click();
+
+      // Add first row
+      cy.get('[data-cy="add-new-row"]').click();
+
+      cy.get("mat-select[data-cy=field-type-input]").last().click();
+
+      cy.get("mat-option")
+        .contains("string")
+        .then((option) => {
+          option[0].click();
+        });
+
+      cy.get("[data-cy=metadata-name-input]")
+        .last()
+        .type(`${metadataName}{enter}`);
+
+      cy.get("[data-cy=metadata-value-input]")
+        .last()
+        .type(`${metadataValue}{enter}`);
+
+      // Add second row with same name. This should throw validation error
+      cy.get('[data-cy="add-new-row"]').click();
+
+      cy.get("mat-select[data-cy=field-type-input]").last().click();
+
+      cy.get("mat-option")
+        .contains("string")
+        .then((option) => {
+          option[0].click();
+        });
+
+      cy.get("[data-cy=metadata-name-input]")
+        .last()
+        .type(`${metadataName}{enter}`);
+
+      cy.get("[data-cy=metadata-value-input]")
+        .last()
+        .type(`${metadataValue}{enter}`);
+
+      cy.get("mat-error").contains("Name is already taken");
+      cy.get("button[data-cy=save-changes-button]").should("be.disabled");
     });
   });
 
@@ -115,7 +178,7 @@ describe("Datasets", () => {
 
         cy.get("[data-cy=metadata-edit-form]").should(
           "not.contain",
-          metadataName
+          metadataName,
         );
       });
     });
