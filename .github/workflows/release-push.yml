@@ -3,12 +3,10 @@ name: Bump release version and build-push image
 on:
   push:
     branches:
-      - release_new
-
+      - master
 env:
   NODE_VERSION: 20.x
-  RELEASE_BRANCH: release_new
-
+  RELEASE_BRANCH: master
 jobs:
   build-release:
     runs-on: ubuntu-latest
@@ -42,7 +40,7 @@ jobs:
 
       - name: Update release version
         run: |
-          npm version --no-git-tag-version ${{ steps.release_version.output.release_version }}
+          sed -i "s/\"version\": \".*\"/\"version\": \"${{ steps.release_version.output.release_version }}\"/" package.json
 
       - name: Commit package with new version
         run: |
