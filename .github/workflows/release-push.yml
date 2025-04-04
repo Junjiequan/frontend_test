@@ -40,7 +40,7 @@ jobs:
 
       - name: Update release version
         run: |
-          sed -i "s/\"version\": \".*\"/\"version\": \"${{ steps.release_version.output.release_version }}\"/" package.json
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"${{ steps.release_version.output.release_version }}\"/" package.json
 
 
       - name: Create a GitHub release
