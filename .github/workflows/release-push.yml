@@ -46,10 +46,10 @@ jobs:
 
       - name: Commit package with new version
         run: |
-          git config --global user.name 'SciCat FE Release Workflow'
-          git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
-          git commit -am --amend "Set release"
-          git push
+          git config --global user.name 'SciCat FE test Release Workflow'
+          git config --global user.email 'scicat-test.release.workflow@users.noreply.github.com'
+          git commit --amend -am "Set release test"
+          git push 
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
@@ -58,7 +58,7 @@ jobs:
           name: Release ${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
 
-      ## The setup-qemu-action simplifies the setup of QEMU for cross-platform builds
+      ## The setup-qemu-action simplifies the setup of QEMU for cross-platform buildssssdd
       ## https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -73,17 +73,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Node.js dependencies
-        run: npm ci
+      # - name: Install Node.js dependencies
+      #   run: npm ci
 
-      ## The metadata-action dynamically generates and manages metadata for Docker images,
-      ## like tags and labels, based on the provided inputs and workflow context.
-      ## https://github.com/docker/metadata-action
+      # The metadata-action dynamically generates and manages metadata for Docker images,
+      # like tags and labels, based on the provided inputs and workflow context.
+      # https://github.com/docker/metadata-action
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/scicatproject/frontend
+          images: ghcr.io/junjiequan/frontend_test
           tags: |
             type=raw,value=stable
             type=raw,value=${{ steps.tag_version.outputs.new_tag }}
@@ -94,6 +94,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm64/v8
+          platforms: linux/arm64/v8
           push: true
           tags: ${{ steps.meta.outputs.tags }}
