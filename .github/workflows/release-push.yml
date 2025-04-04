@@ -42,14 +42,6 @@ jobs:
         run: |
           sed -i "s/\"version\": \".*\"/\"version\": \"${{ steps.release_version.output.release_version }}\"/" package.json
 
-      - name: Commit package with new version
-        run: |
-          git config --global user.name 'SciCat FE test Release Workflow'
-          git config --global user.email 'scicat-test.release.workflow@users.noreply.github.com'
-          git commit --amend -am "Set release test"
-          git config pull.rebase true
-          git pull
-          git push 
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
