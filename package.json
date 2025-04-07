@@ -67,7 +67,7 @@
     "@betterer/cli": "^5.3.6",
     "@betterer/typescript": "^5.3.6",
     "@ngrx/schematics": "^16",
-    "@ngrx/store-devtools": "^16",
+    "@ngrx/store-devtools": "^19",
     "@types/deep-equal": "^1.0.1",
     "@types/file-saver": "^2.0.2",
     "@types/jasmine": "^5.1.0",
