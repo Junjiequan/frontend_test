@@ -92,15 +92,12 @@ jobs:
           grep "version" package.json
           git log
 
-      - name: Create GitHub release with asset
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ needs.update-version.outputs.new_tag }}
-          name: Release ${{ needs.update-version.outputs.new_tag }}
-          body: ${{ needs.update-version.outputs.changelog }}
   finilize:
     needs: [update-version, create-release]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
