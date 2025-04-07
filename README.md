@@ -22,7 +22,7 @@ For the full documentation please go to the [SciCat home page](https://scicatpro
 
 ## License
 
-See the [LICENSE](LICENSE) file for details.
+See the [LICENSE](LICENSE) file for details.d
 
 ## Acknowledgmentss
 
