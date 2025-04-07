@@ -71,7 +71,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.update-version.outputs.new_tag }}
+          ref: refs/tags/${{ needs.update-version.outputs.new_tag }}
 
       - name: print current branch
         run: |
