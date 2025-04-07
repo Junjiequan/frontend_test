@@ -50,7 +50,7 @@ jobs:
 
       - name: Update release version
         run: |
-          npm version --no-git-tag-version ${{ steps.release_version.outputs.release_version }}
+          npm version ${{ steps.release_version.outputs.release_version }}
 
       - name: Push commit and tags
         run: |
