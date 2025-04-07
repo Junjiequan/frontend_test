@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      ## Commit message examples for Release type (patch|minor|major) can be found:asdasda ssssdfsdfsds.1
+      ## Commit message examples for Release type (patch|minor|major) can be found:asdasda ssssdfsdfsds.12
       ## https://github.com/mathieudutour/github-tag-action
       - name: Bump version and push tag
         id: tag_version
@@ -51,7 +51,7 @@ jobs:
       - name: Update release version
         run: |
           npm version --no-git-tag-version ${{ steps.release_version.outputs.release_version }}
-    
+
       - name: Push commit and tags
         run: |
           git config --global user.name 'SciCat FE Release Workflow'
@@ -69,7 +69,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ needs.update-version.outputs.new_tag }}
-          
+
       - name: print current branch
         run: |
           echo "Current branch is ${{ github.ref }}"
