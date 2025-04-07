@@ -1,0 +1,90 @@
+.grid-container {
+  display: grid;
+  margin-top: 2em;
+  grid-template-columns: repeat(auto-fill, minmax(14em, 1fr));
+  gap: 1em;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column; /* Align content vertically */
+  height: 100%; /* Ensures the card takes full height */
+}
+
+.attachment-card {
+  img {
+    cursor: pointer;
+    width: 12em;
+    height: 14em;
+  }
+
+  button {
+    width: 100%; /* Makes the button fill the width of the parent container */
+    display: flex; /* Use Flexbox for centering */
+    justify-content: center; /* Center the text horizontally */
+    align-items: center; /* Center the text vertically */
+  }
+
+  .submit-button {
+    margin-top: 0.5em;
+  }
+
+  .download-button {
+    min-width: auto;
+    margin: 0;
+    padding: 0 5px;
+  }
+
+  .delete-button {
+    min-width: auto;
+    margin: 0;
+    padding: 0 5px;
+  }
+}
+.file-uploader {
+  margin: 1em;
+}
+
+.font-small {
+  font-size: small !important;
+}
+
+@media only screen and (min-width: 1280px) {
+  .dropzone {
+    align-items: center;
+    background: #dcdcdc;
+    border: dashed 1px grey;
+    display: flex;
+    justify-content: center;
+    height: 14em;
+
+    input {
+      display: none;
+    }
+
+    .instructions {
+      margin: 0.5em;
+      font-size: 1.25em;
+      flex: 1 0 100px;
+      text-align: center;
+    }
+  }
+
+  .file-picker {
+    display: none;
+  }
+
+  .dropzone {
+    margin-top: 1em;
+  }
+}
+
+@media only screen and (max-width: 1279px) {
+  .dropzone {
+    display: none;
+  }
+
+  .file-picker {
+    margin-top: 1em;
+  }
+}

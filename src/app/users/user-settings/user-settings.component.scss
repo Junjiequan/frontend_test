@@ -1,0 +1,64 @@
+mat-card {
+  margin: 1em;
+
+  mat-icon {
+    vertical-align: middle;
+  }
+
+  .section-icon {
+    padding-right: 0.4em;
+    height: auto !important;
+    width: auto !important;
+  }
+
+  .profile-image {
+    margin: 1em 0em;
+  }
+
+  .token-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 10em;
+  }
+
+  .config-button {
+    margin-top: 1em;
+  }
+
+  .empty-state {
+    opacity: 0.5;
+  }
+
+  table {
+    th {
+      min-width: 10em;
+      padding-right: 0.5em;
+      text-align: left;
+    }
+
+    td {
+      padding: 0.5em;
+      display: flex;
+      align-items: center;
+      word-break: break-all;
+
+      .copy-button {
+        padding-left: 0.5em;
+      }
+
+      .copy-button:hover {
+        cursor: pointer;
+      }
+
+      .toggleButton {
+        margin: 0 1em;
+      }
+
+      .toggleButton:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
