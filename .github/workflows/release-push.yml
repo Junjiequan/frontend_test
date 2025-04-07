@@ -56,6 +56,7 @@ jobs:
         run: |
           git config --global user.name 'SciCat FE Release Workflow'
           git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
+          grep "version" package.json
           git add package.json
           git commit -m "Set release"
 
