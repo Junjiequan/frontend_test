@@ -32,7 +32,7 @@
     "@angular/service-worker": "^16",
     "@ngbracket/ngx-layout": "^16.0.0",
     "@ngrx/effects": "^16",
-    "@ngrx/router-store": "^16",
+    "@ngrx/router-store": "^19",
     "@ngrx/store": "^16",
     "@ngx-translate/core": "^16.0.4",
     "@scicatproject/scicat-sdk-ts-angular": "^4.13.0",
