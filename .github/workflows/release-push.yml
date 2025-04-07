@@ -50,13 +50,13 @@ jobs:
 
       - name: Update release version
         run: |
-          npm version ${{ steps.release_version.outputs.release_version }}
+          npm version ${{ steps.release_version.outputs.tag }}
 
       - name: Push commit and tags
         run: |
           git config --global user.name 'SciCat FE Release Workflow'
           git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
-          echo "${{ steps.release_version.outputs.release_version }}"
+          echo "${{ steps.release_version.outputs.tag }}"
           grep "version" package.json
           git push
 
