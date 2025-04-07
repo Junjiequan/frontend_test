@@ -61,7 +61,8 @@ jobs:
           echo "${{ steps.release_version.outputs.tag }}"
           grep "version" package.json
           git add package.json
-          git commit -m "set new release [skip ci]"
+          git commit -m "set new release"
+          git tag ${{ steps.release_version.outputs.tag }}
           git push
 
   create-release:
