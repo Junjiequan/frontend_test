@@ -3,10 +3,10 @@ name: Bump release version and build-push image
 on:
   push:
     branches:
-      - release
+      - release2
 env:
   NODE_VERSION: 20.x
-  RELEASE_BRANCH: release
+  RELEASE_BRANCH: release2
 
 jobs:
   update-version:
