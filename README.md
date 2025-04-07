@@ -24,7 +24,7 @@ For the full documentation please go to the [SciCat home page](https://scicatpro
 
 See the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## Acknowledgmentss
 
 Scicat is developed at PSI, ESS and MAXIV with in-kind funding from ESS and from the European Union Framework Programme for Research and Innovation Horizon 2020, under grant agreement 676548, “BrightnESS”.
 

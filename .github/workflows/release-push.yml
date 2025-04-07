@@ -57,7 +57,7 @@ jobs:
           git config --global user.name 'SciCat FE Release Workflow'
           git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
           git commit --amend -a -m "Set release"
-          git push --follow-tags --force
+          git push
 
   create-release:
     needs: update-version
