@@ -79,6 +79,7 @@ jobs:
 
       - name: print current branch
         run: |
+          git fetch --tags
           echo "Current branch is ${{ github.ref }}"
           echo "Current commit is ${{ github.sha }}"
 
