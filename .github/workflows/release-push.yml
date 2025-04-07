@@ -81,6 +81,13 @@ jobs:
           echo "Current branch is ${{ github.ref }}"
           echo "Current commit is ${{ github.sha }}"
 
+      - name: Ensure latest commit from remote
+        run: |
+          git fetch origin
+          git reset --hard origin/${{ env.RELEASE_BRANCH }}
+          echo "Current branch is ${{ github.ref }}"
+          echo "Current commit is ${{ github.sha }}"
+
       - name: Verify updated version in package.json
         run: |
           grep "version" package.json
