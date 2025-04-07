@@ -61,7 +61,6 @@ jobs:
           echo "${{ steps.release_version.outputs.tag }}"
           grep "version" package.json
           git push
-          git fetch --tags
 
   create-release:
     needs: update-version
@@ -71,8 +70,6 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: refs/tags/${{ needs.update-version.outputs.new_tag }}
 
       - name: print current branch
         run: |
