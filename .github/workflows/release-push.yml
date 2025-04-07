@@ -61,6 +61,7 @@ jobs:
           echo "${{ steps.release_version.outputs.tag }}"
           grep "version" package.json
           git push
+          git fetch --tags
 
   create-release:
     needs: update-version
