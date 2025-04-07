@@ -62,8 +62,8 @@ jobs:
           grep "version" package.json
           git add package.json
           git commit -m "set new release"
-          git tag ${{ steps.release_version.outputs.tag }}
-          git push
+          git tag -f ${{ steps.release_version.outputs.tag }}
+          git push --force
 
   create-release:
     needs: update-version
