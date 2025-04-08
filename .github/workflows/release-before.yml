@@ -2,6 +2,7 @@ name: Bump release version and build-push image
 
 on:
   pull_request:
+    types: [opened]
     branches:
       - release3
 env:
