@@ -55,4 +55,5 @@ jobs:
           git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
           npm version ${{ steps.release_version.outputs.tag }}
           grep "version" package.json
-          git push origin HEAD:refs/pull/24/merge
+          echo "what is this:>>>> ${{ github.event.pull_request.base.ref}}"
+          git push origin HEAD:${{ github.event.pull_request.base.ref}}
