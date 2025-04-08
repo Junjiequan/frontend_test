@@ -2,7 +2,7 @@ name: Bump release version and build-push image
 
 on:
   pull_request:
-    types: [opened]
+    # types: [opened]
     branches:
       - release4
 env:
@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      ## Commit message examples for Release type (patch|minor|major) can be found:
+      ## Commit message examples for Release type (patch|minor|major) can be found: 1
       ## https://github.com/mathieudutour/github-tag-action
       - name: Bump version and push tag
         id: tag_version
