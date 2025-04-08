@@ -1,0 +1,53 @@
+name: Bump release version and build-push image
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - release3
+env:
+  NODE_VERSION: 20.x
+  RELEASE_BRANCH: release3
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: print current branch
+        run: |
+          echo "Current branch is ${{ github.ref }}"
+          echo "Current commit is ${{ github.sha }}"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      ## Commit message examples for Release type (patch|minor|major) can be found:asdasda ssssdfsdfsds.123
+      ## https://github.com/mathieudutour/github-tag-action
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          release_branches: ${{ env.RELEASE_BRANCH }}
+
+      - name: Strip 'v' from the tag
+        id: release_version
+        run: |
+          TAG=${{ steps.tag_version.outputs.new_tag }}
+          WITHOUT_V=${TAG#v}
+          echo "tag=$WITHOUT_V" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub release with tag
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.release_version.outputs.tag }}
+          name: Release ${{ steps.release_version.outputs.tag }}
+          body: ${{ steps.release_version.outputs.changelog }}
