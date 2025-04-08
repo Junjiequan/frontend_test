@@ -54,4 +54,4 @@ jobs:
           git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
           npm version ${{ steps.release_version.outputs.tag }}
           grep "version" package.json
-          git push
+          git push origin HEAD:refs/heads/release3
