@@ -4,10 +4,10 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - release3
+      - release4
 env:
   NODE_VERSION: 20.x
-  RELEASE_BRANCH: release3
+  RELEASE_BRANCH: release4
 
 jobs:
   update-version:
