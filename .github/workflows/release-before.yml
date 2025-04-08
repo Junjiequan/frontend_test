@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      ## Commit message examples for Release type (patch|minor|major) can be found:asdasda ssssdfsdfsds.123
+      ## Commit message examples for Release type (patch|minor|major) can be found:asdasda ssssdfsdfsds.1234
       ## https://github.com/mathieudutour/github-tag-action
       - name: Bump version and push tag
         id: tag_version
