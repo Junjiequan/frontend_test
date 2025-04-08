@@ -1,7 +1,7 @@
 name: Bump release version and build-push image
 
 on:
-  push:
+  pull_request:
     branches:
       - release3
 env:
@@ -64,53 +64,3 @@ jobs:
           git commit -m "set new release"
           git tag -f ${{ steps.release_version.outputs.tag }}
           git push --force
-
-  create-release:
-    needs: update-version
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: print current branch
-        run: |
-          git fetch --tags
-          echo "Current branch is ${{ github.ref }}"
-          echo "Current commit is ${{ github.sha }}"
-
-      - name: Ensure latest commit from remote
-        run: |
-          git fetch origin
-          git reset --hard origin/${{ env.RELEASE_BRANCH }}
-          echo "Current branch is ${{ github.ref }}"
-          echo "Current commit is ${{ github.sha }}"
-
-      - name: Verify updated version in package.json
-        run: |
-          grep "version" package.json
-          git log
-
-  finilize:
-    needs: [update-version, create-release]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: print current branch
-        run: |
-          git fetch --tags
-          echo "Current branch is ${{ github.ref }}"
-          echo "Current commit is ${{ github.sha }}"
-          grep "version" package.json
-
-      - name: Create GitHub release with asset
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ needs.update-version.outputs.new_tag }}
-          name: Release ${{ needs.update-version.outputs.new_tag }}
-          body: ${{ needs.update-version.outputs.changelog }}
