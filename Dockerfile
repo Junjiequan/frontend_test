@@ -4,7 +4,7 @@ RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 
 WORKDIR /frontend
 COPY package*.json /frontend/
-RUN npm ci
+RUN npm install
 COPY . /frontend/
 RUN npx ng build
 
