@@ -49,11 +49,24 @@ jobs:
           WITHOUT_V=${TAG#v}
           echo "tag=$WITHOUT_V" >> $GITHUB_OUTPUT
 
-      - name: Update release version
-        run: |
-          git config --global user.name 'SciCat FE Release Workflow'
-          git config --global user.email 'scicat.release.workflow@users.noreply.github.com'
-          npm version ${{ steps.release_version.outputs.tag }}
-          grep "version" package.json
-          echo "what is this:>>>> ${{ github.event.pull_request.base.ref}}"
-          git push --force origin HEAD:${{ github.event.pull_request.base.ref}}
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/scicatproject/frontend
+          tags: |
+            type=raw,value=stable
+            type=raw,value=${{ steps.tag_version.outputs.new_tag }}
+            type=semver,pattern={{version}}
+            type=raw,value={{date 'YYYY_MM'}},prefix=r_
+
+      - name: update npm version
+        run: npm version --no-git-tag-version ${{ steps.release_version.outputs.tag }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
