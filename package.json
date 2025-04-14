@@ -63,7 +63,7 @@
     "@angular-eslint/schematics": "^16",
     "@angular-eslint/template-parser": "^16",
     "@angular/cli": "^16",
-    "@angular/compiler-cli": "^16",
+    "@angular/compiler-cli": "^19",
     "@betterer/cli": "^5.3.6",
     "@betterer/typescript": "^5.3.6",
     "@ngrx/schematics": "^16",
