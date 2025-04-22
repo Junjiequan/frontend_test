@@ -46,11 +46,14 @@ jobs:
           WITHOUT_V=${TAG#v}
           echo "tag=$WITHOUT_V" >> $GITHUB_OUTPUT
 
-      - name: update npm version
+      - name: Configure Git
         run: |
-          npm version ${{ steps.release_version.outputs.tag }}
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version, commit & tag
+        run: |
+          npm version ${{ steps.release_version.outputs.tag }}   # now commits & tags with your identity
           git push --follow-tags
 
       - name: Create GitHub release with tag
