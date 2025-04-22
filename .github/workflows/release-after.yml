@@ -63,15 +63,15 @@ jobs:
           body: ${{ steps.release_version.outputs.changelog }}
           artifacts: ''
 
-      - name: Build your artifacts
+      - name: Zip everything
         run: |
-          zip -r app.zip .
+          zip -r release-${{ steps.release_version.outputs.tag }}.zip .
 
       - name: Upload build artifact to release
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: release-${{ steps.release_version.outputs.tag }}.zip
+          asset_path: ./release-${{ steps.release_version.outputs.tag }}.zip
           asset_name: release-${{ steps.release_version.outputs.tag }}.zip
           asset_content_type: application/zip
 
