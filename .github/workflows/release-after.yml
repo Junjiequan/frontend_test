@@ -63,6 +63,8 @@ jobs:
           name: Release ${{ steps.release_version.outputs.tag }}
           body: ${{ steps.release_version.outputs.changelog }}
           artifacts: ''
+          removeArtifacts: true
+          replacesArtifacts: true
 
       - name: Zip everything
         run: |
