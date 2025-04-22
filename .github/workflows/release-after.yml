@@ -52,9 +52,11 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version, commit & tag
+        id: bump
         run: |
           npm version ${{ steps.release_version.outputs.tag }}   # now commits & tags with your identity
           git push --follow-tags
+          echo "commit=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create GitHub release with tag
         id: create_release
@@ -63,9 +65,8 @@ jobs:
           tag: ${{ steps.release_version.outputs.tag }}
           name: Release ${{ steps.release_version.outputs.tag }}
           body: ${{ steps.release_version.outputs.changelog }}
-          artifacts: ''
-          removeArtifacts: true
-          replacesArtifacts: true
+          makeLatest: true
+          commit: ${{ steps.bump.outputs.commit }}
 
       - name: Zip everything
         run: |
