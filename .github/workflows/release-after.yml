@@ -66,7 +66,6 @@ jobs:
           name: Release ${{ steps.release_version.outputs.tag }}
           body: ${{ steps.release_version.outputs.changelog }}
           makeLatest: true
-          commit: ${{ steps.bump.outputs.commit }}
 
       - name: Zip everything
         run: |
