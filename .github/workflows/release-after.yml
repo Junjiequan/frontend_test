@@ -51,7 +51,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Bump version, commit & tag
+      - name: Bump package version, commit & tag
         id: bump
         run: |
           npm version ${{ steps.release_version.outputs.tag }}   # now commits & tags with your identity
@@ -65,19 +65,7 @@ jobs:
           tag: ${{ steps.release_version.outputs.tag }}
           name: Release ${{ steps.release_version.outputs.tag }}
           body: ${{ steps.release_version.outputs.changelog }}
-          makeLatest: true
-
-      - name: Zip everything
-        run: |
-          zip -r release-${{ steps.release_version.outputs.tag }}.zip .
-
-      - name: Upload build artifact to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-${{ steps.release_version.outputs.tag }}.zip
-          asset_name: release-${{ steps.release_version.outputs.tag }}.zip
-          asset_content_type: application/zip
+          commit: ${{ steps.bump.outputs.commit }}
 
       - name: Print tag
         run: echo "tag=${{ steps.release_version.outputs.tag }}"
