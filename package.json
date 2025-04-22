@@ -1,6 +1,6 @@
 {
   "name": "scicat-frontend",
-  "version": "0.0.59",
+  "version": "0.0.60",
   "license": "BSD-3-Clause",
   "scripts": {
     "ng": "ng",
