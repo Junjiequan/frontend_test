@@ -45,9 +45,15 @@ jobs:
           WITHOUT_V=${TAG#v}
           echo "tag=$WITHOUT_V" >> $GITHUB_OUTPUT
 
+      - name: update npm version
+        run: npm version --no-git-tag-version ${{ steps.release_version.outputs.tag }}
+
       - name: Create GitHub release with tag
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.release_version.outputs.tag }}
           name: Release ${{ steps.release_version.outputs.tag }}
           body: ${{ steps.release_version.outputs.changelog }}
+
+      - name: Print tag
+        run: echo "tag=${{ steps.release_version.outputs.tag }}"
